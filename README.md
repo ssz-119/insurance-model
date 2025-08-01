@@ -4,21 +4,21 @@
 - [Project Overview](#project-overview)
     - [Objective](#objective)
     - [Research Questions](#research-questions)
-    - [Hypotheses](#hypotheses)
-    - [Dataset](#dataset)
     - [Tools and Libraries](#tools-and-libraries)
 - [Data Exploration](#data-exploration)
 - [Data Wrangling](#data-wrangling)
 - [Model Summary](#model-summary)
-- [Experimentation and Analysis](#experimentation-and-analysis)
 - [Visualizations](#visualizations)
-- [Key Insights](#key-insights)
-    - [Conclusion](#conclusion)
+    - [Simple Linear Model](#simple-linear-model)
+    - [Multivariate Model](#multivariate-model)
+- [Statistical Analysis](#statistical-analysis)
+- [Experimentation](#experimentation)
+- [Conclusion](#conclusion)
 - [Files](#files)
   
 
 # Project Overview
-This project explores the factors that influence medical insurance for individuals in the U.S. charges using regression models. Two regression models, a simple linear and a multivariate, were built, compared, and analyzed to determine performance. I used R and ggplot2 for analysis and visualization, and presented my findings in a final slide deck as part of University of Washington's DATAANA course.
+This project explores the factors that influence total medical insurance costs for individuals in the United States. Two regression models, a simple linear and a multivariate, were built, compared, and analyzed to determine performance. I used R and ggplot2 for analysis and visualization, and presented my findings in a final slide deck as part of University of Washington's DATAANA course.
 
 ### Objective
 The primary objective is to predict medical insurance costs, evaluate prediction models, and understand how variables such as age, bmi, and smoker status affect individual charges.
@@ -28,14 +28,6 @@ The primary objective is to predict medical insurance costs, evaluate prediction
 - To what extent does BMI (body mass index) predict higher insurance costs?
 - Is this a significant difference in medical insurance charges between smokers and non-smokers?
 
-### Hypotheses
-- **H0:** There are no significant differences in medical insurance costs between smokers and non-smokers.
-- **H1:** Individuals who smoke will have significantly higher medical insurance charges than non-smokers.
-
-## Dataset
-Source: [Kaggle Medical Cost Personal Dataset](https://www.kaggle.com/datasets/mirichoi0218/insurance)
-
-Columns included are age, sex, bmi, children, smoker, region, and charges (the predictive label).
 ## Tools and Libraries
 
 - **Language:** R
@@ -100,14 +92,48 @@ This model includes multiple predictors (age, BMI, children, smoking status, reg
 - Smoker status was the strongest predictor
 - Age, BMI, and number of children were also signficiant variables
 
-# Experimentation and Analysis
-
-The Northwest region actually had a p-value of less than 0,05, so an alternative model was created to test the impact of the region variable. The resulting RMSE increased only slightly from 5,972 to 5,988 and the adjusted R² dropped by just 0.07%, indicating minimal impact on model performance. Based on these metrics, the region variable could be potentially excluded in order to simplify the model. 
-
 # Visualizations
+Scatterplots visualize the predicted charges (in points) from the each model versus the actual individual charges from the dataset. The closer the slope is to 1, the more accurate the predictions are. 
 
-# Key Insights
+## Simple Linear Model
 
-## Conclusion
+<img src="costs_simple_model.png" alt="Insurance Costs Prediction Accuracy Using a Simple Linear Regression Model" width="600"/>
+
+## Multivariate Model
+
+<img src="costs_multivariate_model.png" alt="Insurance Costs Prediction Accuracy Using a Multivariate Regression Model" width="600"/>
+
+# Statistical Analysis
+**Hypotheses**
+- Null hypothesis (H₀): There is no significant difference in average insurance charges between smokers and non-smokers.
+- Altenative Hypothesis (H1): Smokers have significantly higher average insurance charges than non-smokers.
+    
+**Interpretation:**
+
+There is strong statistical evidence that smokers have significantly higher medical insurance charges compared to non-smokers. On average, smokers pay approximately $23,616 more. The p-value is very close to zero, so the difference between the two groups is statistically significant. The negative and fairly large t-value and confidence interval also reflects the fact that smokers have much higher and signficant insurances chargers compared to non-smokers
+
+```r
+# Perform a two-sample t-test to compare smokers vs non-smokers
+t_test_result <- t.test(charges ~ smoker, data = insurance)
+t_test_result
+```
+    Welch Two Sample t-test
+    data:  charges by smoker
+    t = -32.752, df = 311.85, p-value < 2.2e-16
+
+The result is statistically significant. Reject the null hypothesis.
+
+
+# Experimentation
+
+The Northwest region had a p-value < 0.05, so an alternative model was created to test the impact of the region variable. The resulting RMSE increased slightly from 5,972 to 5,988 and the adjusted R² dropped by just 0.07%, indicating minimal impact on model performance. Based on these metrics, the region variable could be potentially excluded in order to simplify the model. 
+
+# Conclusion
+This analysis used linear regression and hypothesis testing to explore key drivers of medical insurance charges. Smoking status, age, BMI, and number of children were significant predictors, with smoking having the greatest impact. The multivariate model outperformed the simple model (R² ≈ 0.75 vs. 0.07), and a t-test confirmed that smokers are charged significantly more, with an average difference of over $23,000.
 
 # Files
+
+- Full analysis with code and commentary [here](https://github.com/ssz-119/insurance-model/blob/main/medical_r_analysis.pdf)
+- Final project presentation slides [here](https://github.com/ssz-119/insurance-model/blob/main/insurance_slides.pdf)
+- Dataset Source: [Kaggle Medical Cost Personal Dataset](https://www.kaggle.com/datasets/mirichoi0218/insurance) (Open Data - Database Content License)
+
