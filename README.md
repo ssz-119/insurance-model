@@ -93,7 +93,7 @@ This model includes multiple predictors (age, BMI, children, smoking status, reg
 - Age, BMI, and number of children were also signficiant variables
 
 # Visualizations
-Scatterplots visualize the predicted charges (in points) from the each model versus the actual individual charges from the dataset. The closer the slope is to 1, the more accurate the predictions are. 
+Scatterplots visualize the predicted charges (in points) from the each model versus the actual individual charges (in line) from the dataset. The closer the slope is to 1, the more accurate the predictions are. 
 
 ## Simple Linear Model
 
@@ -133,7 +133,7 @@ This analysis used linear regression and hypothesis testing to explore key drive
 
 # Files
 
-- Full analysis with code and commentary [here](https://github.com/ssz-119/insurance-model/blob/main/medical_r_analysis.pdf)
+- Full analysis with code and commentary [here](https://github.com/ssz-119/insurance-model/blob/main/medical_r_analysis.ipynb)
 - Final project presentation slides [here](https://github.com/ssz-119/insurance-model/blob/main/insurance_slides.pdf)
 - Dataset Source: [Kaggle Medical Cost Personal Dataset](https://www.kaggle.com/datasets/mirichoi0218/insurance) (Open Data - Database Content License)
 
